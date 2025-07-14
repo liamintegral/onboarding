@@ -25,7 +25,8 @@ export default function handler(req, res) {
         status: 'OK',
         timestamp: new Date().toISOString(),
         environment: process.env.NODE_ENV || 'development',
-        vercel: true
+        vercel: true,
+        version: '1.1.0'
       })
     }
 
