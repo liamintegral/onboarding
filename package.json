@@ -2,19 +2,20 @@
   "name": "client-onboarding-dashboard",
   "version": "1.0.0",
   "description": "AI-powered client onboarding dashboard for digital marketing agency",
-  "main": "index.js",
+  "main": "api/index.js",
   "scripts": {
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "backend": "cd backend && npm run dev",
-    "frontend": "cd frontend && npm start",
-    "build": "cd frontend && npm run build && cd ../backend && npm run build",
-    "test": "cd backend && npm test && cd ../frontend && npm test",
-    "postinstall": "cd backend && npm install && cd ../frontend && npm install"
+    "dev": "vercel dev",
+    "build": "echo 'Build complete'",
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0",
+    "jsonwebtoken": "^9.0.2"
   },
   "keywords": ["dashboard", "onboarding", "ai", "marketing", "automation"],
   "author": "Digital Marketing Agency",
   "license": "PRIVATE",
-  "devDependencies": {
-    "concurrently": "^8.2.0"
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
