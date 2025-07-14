@@ -1,3 +1,4 @@
+require('dotenv').config();
 const database = require('./supabase');
 
 async function migrate() {
