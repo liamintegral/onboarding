@@ -14,7 +14,7 @@ function Dashboard() {
   const fetchPlatforms = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/platforms/connections', {
+      const response = await fetch('https://onboarding-dashboard-nine.vercel.app/api/platforms/types', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -22,7 +22,7 @@ function Dashboard() {
 
       if (response.ok) {
         const data = await response.json();
-        setPlatforms(data.connections);
+        setPlatforms(data.platforms || {});
       } else {
         setError('Failed to load platforms');
       }

@@ -1,4 +1,4 @@
-const API_URL = process.env.REACT_APP_API_URL || '/api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://onboarding-dashboard-nine.vercel.app/api';
 
 class AuthService {
   async register(userData) {
