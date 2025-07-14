@@ -40,6 +40,23 @@ app.use('/api/clients', require('./routes/clients'));
 app.use('/api/platforms', require('./routes/platforms'));
 app.use('/api/chat', require('./routes/chat'));
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Client Onboarding Dashboard API',
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development',
+    endpoints: {
+      health: '/health',
+      auth: '/api/auth/*',
+      clients: '/api/clients/*',
+      platforms: '/api/platforms/*',
+      chat: '/api/chat/*'
+    }
+  });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ 
