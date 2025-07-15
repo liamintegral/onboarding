@@ -495,6 +495,69 @@ function WebsiteAnalysis({ onComplete, onNext }) {
             </div>
           </div>
 
+          {/* Quick Setup Options */}
+          <div style={{
+            background: '#f8fafc',
+            border: '2px solid #e2e8f0',
+            borderRadius: '12px',
+            padding: '1.5rem',
+            marginBottom: '2rem'
+          }}>
+            <h4 style={{ 
+              margin: '0 0 1rem 0', 
+              color: '#2d3748',
+              textAlign: 'center'
+            }}>
+              🚀 Quick Setup Options
+            </h4>
+            <p style={{
+              margin: '0 0 1.5rem 0',
+              color: '#718096',
+              textAlign: 'center',
+              fontSize: '0.9rem'
+            }}>
+              Skip to platform-specific setup flows:
+            </p>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '1rem'
+            }}>
+              <button
+                onClick={() => setShowGoogleMyBusinessSetup(true)}
+                style={{
+                  padding: '0.75rem 1rem',
+                  background: 'linear-gradient(135deg, #4285f4 0%, #34a853 100%)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontWeight: '500',
+                  fontSize: '0.9rem'
+                }}
+              >
+                🏢 Google Properties
+              </button>
+              {analysis.cms?.name === 'WordPress' && (
+                <button
+                  onClick={() => setShowWordPressSetup(true)}
+                  style={{
+                    padding: '0.75rem 1rem',
+                    background: 'linear-gradient(135deg, #21759b 0%, #0073aa 100%)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    fontWeight: '500',
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  🔧 WordPress Setup
+                </button>
+              )}
+            </div>
+          </div>
+
           {/* Action Buttons */}
           <div style={{ 
             display: 'flex', 
