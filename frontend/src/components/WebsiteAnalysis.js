@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import WordPressSetup from './WordPressSetup';
 
 function WebsiteAnalysis({ onComplete, onNext }) {
   const [websiteUrl, setWebsiteUrl] = useState('');
   const [analysis, setAnalysis] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showWordPressSetup, setShowWordPressSetup] = useState(false);
 
   const handleAnalyze = async () => {
     if (!websiteUrl.trim()) {
@@ -30,6 +32,10 @@ function WebsiteAnalysis({ onComplete, onNext }) {
 
       if (response.ok) {
         setAnalysis(data.website);
+        // If WordPress is detected, automatically show the setup flow
+        if (data.website.cms?.name === 'WordPress') {
+          setShowWordPressSetup(true);
+        }
       } else {
         setError(data.error || 'Failed to analyze website');
       }
@@ -43,6 +49,15 @@ function WebsiteAnalysis({ onComplete, onNext }) {
 
   const handleContinue = () => {
     onComplete(analysis);
+    onNext();
+  };
+
+  const handleWordPressSetupComplete = (wordpressData) => {
+    const completedAnalysis = {
+      ...analysis,
+      wordpressSetup: wordpressData
+    };
+    onComplete(completedAnalysis);
     onNext();
   };
 
@@ -130,6 +145,16 @@ function WebsiteAnalysis({ onComplete, onNext }) {
     };
   };
 
+
+  // If WordPress setup is active, show the dedicated setup flow
+  if (showWordPressSetup) {
+    return (
+      <WordPressSetup
+        websiteUrl={websiteUrl}
+        onComplete={handleWordPressSetupComplete}
+      />
+    );
+  }
 
   return (
     <div style={{
