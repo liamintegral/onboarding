@@ -317,6 +317,17 @@ function WebsiteAnalysis({ onComplete, onNext }) {
                       }}>
                         <strong>💡 Alternative:</strong> {instructions.alternative}
                       </div>
+                      
+                      <div style={{
+                        marginTop: '1rem',
+                        padding: '1rem',
+                        background: '#e0e7ff',
+                        border: '1px solid #6366f1',
+                        borderRadius: '6px',
+                        color: '#3730a3'
+                      }}>
+                        <strong>🎯 Next Step:</strong> After clicking "Continue Setup", you'll see a detailed form with visual examples to create the admin user and provide the login credentials.
+                      </div>
                     </div>
                   </div>
                 );
@@ -343,6 +354,24 @@ function WebsiteAnalysis({ onComplete, onNext }) {
               </ul>
             </div>
           )}
+
+          {/* AI Assistant Notice */}
+          <div style={{
+            background: '#f0f9ff',
+            border: '1px solid #0ea5e9',
+            padding: '1rem',
+            borderRadius: '6px',
+            marginBottom: '2rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+            <span style={{ fontSize: '1.5rem' }}>🤖</span>
+            <div>
+              <strong>Need Help?</strong> Look for the AI assistant chat button in the bottom-right corner. 
+              I can answer questions about {analysis.cms?.name || 'your platform'} setup and guide you through each step!
+            </div>
+          </div>
 
           {/* Action Buttons */}
           <div style={{ 
