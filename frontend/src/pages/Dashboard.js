@@ -14,7 +14,7 @@ function Dashboard() {
   const fetchPlatforms = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://onboarding-dashboard-nine.vercel.app/api/platforms/types', {
+      const response = await fetch('/api/platforms/types', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
