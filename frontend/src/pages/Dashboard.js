@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import OnboardingWizard from '../components/OnboardingWizard';
+import WebsiteAnalysis from '../components/WebsiteAnalysis';
 
 function Dashboard() {
   const { user, logout } = useAuth();
@@ -40,14 +40,14 @@ function Dashboard() {
     await logout();
   };
 
-  const handleWizardComplete = (results) => {
-    console.log('Onboarding completed:', results);
+  const handleSetupComplete = (results) => {
+    console.log('Setup completed:', results);
     setShowWizard(false);
     // Refresh platforms to show updated status
     fetchPlatforms();
   };
 
-  const handleWizardClose = () => {
+  const handleSetupClose = () => {
     setShowWizard(false);
   };
 
@@ -223,13 +223,53 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* Onboarding Wizard Modal */}
+      {/* Website Analysis & Setup Modal */}
       {showWizard && (
-        <OnboardingWizard
-          platforms={platforms}
-          onComplete={handleWizardComplete}
-          onClose={handleWizardClose}
-        />
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          padding: '2rem'
+        }}>
+          <div style={{
+            background: '#f8fafc',
+            borderRadius: '15px',
+            padding: '2rem',
+            maxWidth: '800px',
+            width: '100%',
+            maxHeight: '90vh',
+            overflow: 'auto',
+            position: 'relative'
+          }}>
+            <button
+              onClick={handleSetupClose}
+              style={{
+                position: 'absolute',
+                top: '1rem',
+                right: '1rem',
+                background: 'none',
+                border: 'none',
+                fontSize: '1.5rem',
+                cursor: 'pointer',
+                color: '#a0aec0',
+                zIndex: 1001
+              }}
+            >
+              ✕
+            </button>
+            <WebsiteAnalysis
+              onComplete={handleSetupComplete}
+              onNext={() => {}} // No-op since we don't want old wizard behavior
+            />
+          </div>
+        </div>
       )}
     </div>
   );
