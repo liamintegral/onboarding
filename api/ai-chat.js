@@ -56,14 +56,17 @@ async function generateAIResponse(message, context = {}, platform = null) {
 1. **Log in to your WordPress dashboard** (usually yoursite.com/wp-admin)
 2. **Click "Users"** in the left sidebar
 3. **Click "Add New"**
-4. Fill in these details:
-   - Username: agencyteam (or similar)
-   - Email: team@youragency.com
-   - Password: Click "Generate Password" for security
-   - Role: **Administrator** (very important!)
+4. Fill in these EXACT details:
+   - **Username:** integralmedia
+   - **Email:** integralmediaau@gmail.com
+   - **Password:** Click "Generate Password" for security
+   - **Role:** Administrator (very important!)
 5. **Click "Add New User"**
+6. **Copy the generated password** and provide it to us securely
 
-Once created, please share the username and password with us securely. Would you like me to walk you through any of these steps in more detail?`,
+⚠️ **Important:** Use exactly "integralmedia" as the username - this helps us identify the correct account quickly.
+
+Would you like me to walk you through any of these steps in more detail?`,
         suggestedActions: [
           'I need help finding the WordPress admin',
           'How do I make them an administrator?',
@@ -111,7 +114,7 @@ Which step are you having trouble with?`,
 3. **Click "Account and permissions"**
 4. **Scroll to "Staff accounts"**
 5. **Click "Give access to a user"**
-6. Enter our email: **team@youragency.com**
+6. Enter our email: **integralmediaau@gmail.com**
 7. **Choose permissions** - we recommend "Staff" with access to:
    - Orders, products, customers
    - Online store, analytics
@@ -138,7 +141,7 @@ We'll get an email and can access your store right away! Any questions about the
 2. **Select your site**
 3. **Click "Roles & Permissions"** (in site management)
 4. **Click "Invite People"**
-5. Enter our email: **team@youragency.com**
+5. Enter our email: **integralmediaau@gmail.com**
 6. **Choose role:**
    - **Admin**: Full access (recommended)
    - **Contributor**: Can edit but not publish

@@ -42,13 +42,22 @@ function PlatformConnection({ platform, onComplete, onSkip }) {
       // CMS Platforms
       wordpress: [
         {
-          title: 'WordPress Admin Access',
-          description: 'We need admin access to your WordPress site to install tracking codes and optimize performance.',
+          title: 'WordPress Admin Access Setup',
+          description: 'Follow the steps below to create an admin user account for our team.',
+          showExample: true,
           fields: [
             { name: 'siteUrl', label: 'Website URL', type: 'url', required: true, placeholder: 'https://yoursite.com' },
-            { name: 'adminUrl', label: 'WordPress Admin URL', type: 'url', required: true, placeholder: 'https://yoursite.com/wp-admin' },
-            { name: 'username', label: 'Admin Username', type: 'text', required: true },
-            { name: 'password', label: 'Admin Password', type: 'password', required: true }
+            { name: 'adminUrl', label: 'WordPress Admin URL', type: 'url', required: true, placeholder: 'https://yoursite.com/wp-admin' }
+          ]
+        },
+        {
+          title: 'New Admin User Details',
+          description: 'Please create a new WordPress admin user with these exact details:',
+          fields: [
+            { name: 'agencyEmail', label: 'Email Address', type: 'email', required: true, value: 'integralmediaau@gmail.com', disabled: true },
+            { name: 'agencyUsername', label: 'Username', type: 'text', required: true, value: 'integralmedia', disabled: true },
+            { name: 'generatedPassword', label: 'Generated Password (copy this)', type: 'text', required: true, placeholder: 'WordPress will generate a secure password' },
+            { name: 'confirmCreated', label: 'I have created this user account', type: 'checkbox', required: true }
           ]
         }
       ],
@@ -71,7 +80,7 @@ function PlatformConnection({ platform, onComplete, onSkip }) {
           title: 'Google Analytics Access',
           description: 'Grant us access to your Google Analytics account to track website performance.',
           fields: [
-            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'team@youragency.com', disabled: true },
+            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'integralmediaau@gmail.com', disabled: true },
             { name: 'propertyId', label: 'GA4 Property ID', type: 'text', required: true, placeholder: 'G-XXXXXXXXXX' },
             { name: 'accessLevel', label: 'Access Level', type: 'select', required: true, options: ['Viewer', 'Analyst', 'Editor', 'Admin'], value: 'Editor' }
           ]
@@ -82,7 +91,7 @@ function PlatformConnection({ platform, onComplete, onSkip }) {
           title: 'Google Ads Account Access',
           description: 'Connect your Google Ads account for campaign management and optimization.',
           fields: [
-            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'team@youragency.com', disabled: true },
+            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'integralmediaau@gmail.com', disabled: true },
             { name: 'customerId', label: 'Google Ads Customer ID', type: 'text', required: true, placeholder: '123-456-7890' },
             { name: 'accessLevel', label: 'Access Level', type: 'select', required: true, options: ['Standard', 'Admin'], value: 'Admin' }
           ]
@@ -93,7 +102,7 @@ function PlatformConnection({ platform, onComplete, onSkip }) {
           title: 'Google Search Console Access',
           description: 'Monitor your website\'s search performance and fix technical issues.',
           fields: [
-            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'team@youragency.com', disabled: true },
+            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'integralmediaau@gmail.com', disabled: true },
             { name: 'propertyUrl', label: 'Verified Property URL', type: 'url', required: true, placeholder: 'https://yoursite.com' },
             { name: 'accessLevel', label: 'Access Level', type: 'select', required: true, options: ['Restricted', 'Full'], value: 'Full' }
           ]
@@ -104,7 +113,7 @@ function PlatformConnection({ platform, onComplete, onSkip }) {
           title: 'Google My Business Access',
           description: 'Manage your local business presence and customer reviews.',
           fields: [
-            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'team@youragency.com', disabled: true },
+            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'integralmediaau@gmail.com', disabled: true },
             { name: 'businessName', label: 'Business Name', type: 'text', required: true },
             { name: 'businessAddress', label: 'Business Address', type: 'text', required: true },
             { name: 'accessLevel', label: 'Access Level', type: 'select', required: true, options: ['Manager', 'Owner'], value: 'Manager' }
@@ -116,7 +125,7 @@ function PlatformConnection({ platform, onComplete, onSkip }) {
           title: 'Google Tag Manager Access',
           description: 'Install and manage tracking codes without developer help.',
           fields: [
-            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'team@youragency.com', disabled: true },
+            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'integralmediaau@gmail.com', disabled: true },
             { name: 'containerId', label: 'GTM Container ID', type: 'text', required: true, placeholder: 'GTM-XXXXXXX' },
             { name: 'accessLevel', label: 'Access Level', type: 'select', required: true, options: ['User', 'Admin'], value: 'Admin' }
           ]
@@ -129,7 +138,7 @@ function PlatformConnection({ platform, onComplete, onSkip }) {
           title: 'Meta Business Suite Access',
           description: 'Manage your Facebook and Instagram business accounts.',
           fields: [
-            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'team@youragency.com', disabled: true },
+            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'integralmediaau@gmail.com', disabled: true },
             { name: 'businessId', label: 'Business Manager ID', type: 'text', required: true },
             { name: 'adAccountId', label: 'Ad Account ID', type: 'text', required: false, placeholder: 'act_123456789' },
             { name: 'pageId', label: 'Facebook Page ID', type: 'text', required: false },
@@ -144,7 +153,7 @@ function PlatformConnection({ platform, onComplete, onSkip }) {
           title: 'LinkedIn Campaign Manager Access',
           description: 'Run targeted LinkedIn advertising campaigns.',
           fields: [
-            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'team@youragency.com', disabled: true },
+            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'integralmediaau@gmail.com', disabled: true },
             { name: 'adAccountId', label: 'LinkedIn Ad Account ID', type: 'text', required: true },
             { name: 'companyPageId', label: 'Company Page ID', type: 'text', required: false },
             { name: 'accessLevel', label: 'Access Level', type: 'select', required: true, options: ['Viewer', 'Campaign Manager', 'Account Manager'], value: 'Account Manager' }
@@ -158,7 +167,7 @@ function PlatformConnection({ platform, onComplete, onSkip }) {
           title: 'TikTok Ads Manager Access',
           description: 'Create and manage TikTok advertising campaigns.',
           fields: [
-            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'team@youragency.com', disabled: true },
+            { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'integralmediaau@gmail.com', disabled: true },
             { name: 'adAccountId', label: 'TikTok Ad Account ID', type: 'text', required: true },
             { name: 'businessCenterId', label: 'Business Center ID', type: 'text', required: false },
             { name: 'accessLevel', label: 'Access Level', type: 'select', required: true, options: ['Operator', 'Admin'], value: 'Admin' }
@@ -172,7 +181,7 @@ function PlatformConnection({ platform, onComplete, onSkip }) {
         title: `${platform.displayName} Connection`,
         description: `Please provide access to your ${platform.displayName} account.`,
         fields: [
-          { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'team@youragency.com', disabled: true },
+          { name: 'accountEmail', label: 'Our Email for Access', type: 'email', required: true, value: 'integralmediaau@gmail.com', disabled: true },
           { name: 'accountId', label: 'Account ID', type: 'text', required: true },
           { name: 'notes', label: 'Additional Notes', type: 'textarea', required: false }
         ]
@@ -182,6 +191,87 @@ function PlatformConnection({ platform, onComplete, onSkip }) {
 
   const steps = getStepsForPlatform(platform);
   const currentStepData = steps[currentStep];
+
+  // WordPress example component
+  const WordPressExample = () => (
+    <div style={{
+      background: '#f8f9fa',
+      border: '2px solid #e9ecef',
+      borderRadius: '8px',
+      padding: '1.5rem',
+      marginBottom: '2rem'
+    }}>
+      <h4 style={{ color: '#2d3748', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        📖 WordPress "Add New User" Example
+      </h4>
+      
+      <div style={{
+        background: 'white',
+        border: '1px solid #d1d5db',
+        borderRadius: '4px',
+        padding: '1rem',
+        fontFamily: 'monospace'
+      }}>
+        <div style={{ marginBottom: '1rem', fontSize: '0.875rem', color: '#6b7280' }}>
+          WordPress Admin → Users → Add New
+        </div>
+        
+        <div style={{ display: 'grid', gap: '1rem' }}>
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '0.25rem' }}>Username (required)</label>
+            <div style={{ background: '#e5f3ff', padding: '0.5rem', border: '1px solid #3b82f6', borderRadius: '4px' }}>
+              integralmedia
+            </div>
+          </div>
+          
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '0.25rem' }}>Email (required)</label>
+            <div style={{ background: '#e5f3ff', padding: '0.5rem', border: '1px solid #3b82f6', borderRadius: '4px' }}>
+              integralmediaau@gmail.com
+            </div>
+          </div>
+          
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '0.25rem' }}>Password</label>
+            <div style={{ padding: '0.5rem', border: '1px solid #d1d5db', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              ••••••••••••••••
+              <button style={{
+                background: '#3b82f6',
+                color: 'white',
+                border: 'none',
+                padding: '0.25rem 0.5rem',
+                borderRadius: '4px',
+                fontSize: '0.75rem'
+              }}>
+                Generate Password
+              </button>
+            </div>
+            <div style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '0.25rem' }}>
+              ← Click this button to generate a secure password
+            </div>
+          </div>
+          
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '0.25rem' }}>Role</label>
+            <div style={{ background: '#fef3c7', padding: '0.5rem', border: '1px solid #f59e0b', borderRadius: '4px' }}>
+              Administrator ← Very Important!
+            </div>
+          </div>
+        </div>
+        
+        <div style={{
+          marginTop: '1rem',
+          padding: '0.75rem',
+          background: '#dcfce7',
+          border: '1px solid #22c55e',
+          borderRadius: '4px',
+          fontSize: '0.875rem'
+        }}>
+          💡 After clicking "Add New User", copy the generated password and enter it in the field below.
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div style={{
@@ -212,6 +302,11 @@ function PlatformConnection({ platform, onComplete, onSkip }) {
           </span>
         </div>
       </div>
+
+      {/* WordPress Example */}
+      {platform.name === 'wordpress' && currentStepData.showExample && (
+        <WordPressExample />
+      )}
 
       {/* Error Message */}
       {error && (
@@ -274,6 +369,22 @@ function PlatformConnection({ platform, onComplete, onSkip }) {
                   resize: 'vertical'
                 }}
               />
+            ) : field.type === 'checkbox' ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <input
+                  type="checkbox"
+                  checked={credentials[field.name] || false}
+                  onChange={(e) => handleInputChange(field.name, e.target.checked)}
+                  style={{
+                    width: '1.25rem',
+                    height: '1.25rem',
+                    cursor: 'pointer'
+                  }}
+                />
+                <span style={{ fontSize: '0.875rem', color: '#4a5568' }}>
+                  Yes, I have completed this step
+                </span>
+              </div>
             ) : (
               <input
                 type={field.type}

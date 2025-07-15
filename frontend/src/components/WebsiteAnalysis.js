@@ -55,7 +55,7 @@ function WebsiteAnalysis({ onComplete, onNext }) {
           'Log in to your WordPress admin dashboard',
           'Go to Users → Add New',
           'Create a new user with Administrator role',
-          'Use email: team@youragency.com',
+          'Use email: integralmediaau@gmail.com',
           'Send us the login credentials via secure method'
         ],
         alternative: 'Or provide us with your hosting panel (cPanel) access',
@@ -67,7 +67,7 @@ function WebsiteAnalysis({ onComplete, onNext }) {
         steps: [
           'Go to your Shopify admin → Settings → Account and permissions',
           'Click "Give access to a user"',
-          'Enter email: team@youragency.com',
+          'Enter email: integralmediaau@gmail.com',
           'Select appropriate permissions (Staff account)',
           'Send invitation'
         ],
@@ -81,7 +81,7 @@ function WebsiteAnalysis({ onComplete, onNext }) {
           'Go to your Wix dashboard',
           'Click on your site → Roles & Permissions',
           'Click "Invite People"',
-          'Enter email: team@youragency.com',
+          'Enter email: integralmediaau@gmail.com',
           'Assign Admin or Contributor role',
           'Send invitation'
         ],
@@ -94,7 +94,7 @@ function WebsiteAnalysis({ onComplete, onNext }) {
         steps: [
           'Go to Settings → Permissions',
           'Click "Invite Contributor"',
-          'Enter email: team@youragency.com',
+          'Enter email: integralmediaau@gmail.com',
           'Choose permission level (Admin recommended)',
           'Send invitation'
         ],
@@ -108,7 +108,7 @@ function WebsiteAnalysis({ onComplete, onNext }) {
           'Go to your Webflow Dashboard',
           'Open your project → Project Settings → Collaborators',
           'Click "Invite Collaborator"',
-          'Enter email: team@youragency.com',
+          'Enter email: integralmediaau@gmail.com',
           'Assign Designer or Admin role'
         ],
         alternative: 'We may need access to hosting settings as well',
