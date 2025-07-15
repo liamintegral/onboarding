@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import PlatformConnection from './PlatformConnection';
+import WebsiteAnalysis from './WebsiteAnalysis';
+import AIChat from './AIChat';
 
 function OnboardingWizard({ platforms, onComplete, onClose }) {
+  const [currentStep, setCurrentStep] = useState('website-analysis'); // 'website-analysis' or 'platforms'
   const [currentPlatformIndex, setCurrentPlatformIndex] = useState(0);
   const [completedPlatforms, setCompletedPlatforms] = useState([]);
   const [skippedPlatforms, setSkippedPlatforms] = useState([]);
+  const [websiteAnalysis, setWebsiteAnalysis] = useState(null);
+  const [showAIChat, setShowAIChat] = useState(false);
   
   // Define the order of platform setup
   const setupOrder = [
@@ -27,7 +32,9 @@ function OnboardingWizard({ platforms, onComplete, onClose }) {
 
   const currentPlatform = orderedPlatforms[currentPlatformIndex];
   const totalPlatforms = orderedPlatforms.length;
-  const progress = ((currentPlatformIndex + 1) / totalPlatforms) * 100;
+  const totalSteps = totalPlatforms + 1; // +1 for website analysis
+  const currentStepNumber = currentStep === 'website-analysis' ? 1 : currentPlatformIndex + 2;
+  const progress = (currentStepNumber / totalSteps) * 100;
 
   const handlePlatformComplete = async (platform, credentials) => {
     // Save platform connection data
@@ -65,12 +72,21 @@ function OnboardingWizard({ platforms, onComplete, onClose }) {
     moveToNext();
   };
 
+  const handleWebsiteAnalysisComplete = (analysis) => {
+    setWebsiteAnalysis(analysis);
+  };
+
+  const handleWebsiteAnalysisNext = () => {
+    setCurrentStep('platforms');
+  };
+
   const moveToNext = () => {
     if (currentPlatformIndex < orderedPlatforms.length - 1) {
       setCurrentPlatformIndex(prev => prev + 1);
     } else {
       // Onboarding complete
       onComplete({
+        websiteAnalysis,
         completed: completedPlatforms,
         skipped: skippedPlatforms,
         total: totalPlatforms
@@ -78,7 +94,7 @@ function OnboardingWizard({ platforms, onComplete, onClose }) {
     }
   };
 
-  if (!currentPlatform) {
+  if (currentStep === 'platforms' && !currentPlatform) {
     return (
       <div style={{
         position: 'fixed',
@@ -153,10 +169,13 @@ function OnboardingWizard({ platforms, onComplete, onClose }) {
         }}>
           <div>
             <h1 style={{ margin: 0, color: '#2d3748' }}>
-              Platform Setup Wizard
+              {currentStep === 'website-analysis' ? 'Website Analysis' : 'Platform Setup Wizard'}
             </h1>
             <p style={{ margin: '0.5rem 0 0 0', color: '#718096' }}>
-              Platform {currentPlatformIndex + 1} of {totalPlatforms}: {currentPlatform.displayName}
+              {currentStep === 'website-analysis' 
+                ? 'Step 1: Analyzing your website'
+                : `Step ${currentStepNumber}: ${currentPlatform?.displayName || ''}`
+              }
             </p>
           </div>
           <button
@@ -187,7 +206,7 @@ function OnboardingWizard({ platforms, onComplete, onClose }) {
             marginBottom: '0.5rem'
           }}>
             <span style={{ fontSize: '0.875rem', color: '#4a5568' }}>
-              Overall Progress
+              Overall Progress ({currentStepNumber} of {totalSteps})
             </span>
             <span style={{ fontSize: '0.875rem', color: '#4a5568' }}>
               {Math.round(progress)}%
@@ -208,47 +227,68 @@ function OnboardingWizard({ platforms, onComplete, onClose }) {
           </div>
         </div>
 
-        {/* Platform Cards Preview */}
-        <div style={{
-          background: 'white',
-          padding: '1rem',
-          borderRadius: '10px',
-          marginBottom: '2rem'
-        }}>
-          <h3 style={{ marginBottom: '1rem', color: '#2d3748' }}>Setup Progress</h3>
+        {/* Platform Cards Preview - only show during platform setup */}
+        {currentStep === 'platforms' && (
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-            gap: '0.5rem'
+            background: 'white',
+            padding: '1rem',
+            borderRadius: '10px',
+            marginBottom: '2rem'
           }}>
-            {orderedPlatforms.map((platform, index) => (
-              <div
-                key={platform.id}
-                style={{
-                  padding: '0.5rem',
-                  borderRadius: '6px',
-                  textAlign: 'center',
-                  fontSize: '0.75rem',
-                  background: index < currentPlatformIndex ? '#c6f6d5' :
-                             index === currentPlatformIndex ? '#fef5e7' : '#f7fafc',
-                  color: index < currentPlatformIndex ? '#22543d' :
-                         index === currentPlatformIndex ? '#b7791f' : '#718096',
-                  border: index === currentPlatformIndex ? '2px solid #f6ad55' : '1px solid #e2e8f0'
-                }}
-              >
-                {platform.displayName}
-                {completedPlatforms.includes(platform.id) && ' ✓'}
-                {skippedPlatforms.includes(platform.id) && ' ⏭'}
-              </div>
-            ))}
+            <h3 style={{ marginBottom: '1rem', color: '#2d3748' }}>Setup Progress</h3>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+              gap: '0.5rem'
+            }}>
+              {orderedPlatforms.map((platform, index) => (
+                <div
+                  key={platform.id}
+                  style={{
+                    padding: '0.5rem',
+                    borderRadius: '6px',
+                    textAlign: 'center',
+                    fontSize: '0.75rem',
+                    background: index < currentPlatformIndex ? '#c6f6d5' :
+                               index === currentPlatformIndex ? '#fef5e7' : '#f7fafc',
+                    color: index < currentPlatformIndex ? '#22543d' :
+                           index === currentPlatformIndex ? '#b7791f' : '#718096',
+                    border: index === currentPlatformIndex ? '2px solid #f6ad55' : '1px solid #e2e8f0'
+                  }}
+                >
+                  {platform.displayName}
+                  {completedPlatforms.includes(platform.id) && ' ✓'}
+                  {skippedPlatforms.includes(platform.id) && ' ⏭'}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Current Platform Connection Form */}
-        <PlatformConnection
-          platform={currentPlatform}
-          onComplete={handlePlatformComplete}
-          onSkip={handlePlatformSkip}
+        {/* Main Content Area */}
+        {currentStep === 'website-analysis' ? (
+          <WebsiteAnalysis
+            onComplete={handleWebsiteAnalysisComplete}
+            onNext={handleWebsiteAnalysisNext}
+          />
+        ) : (
+          <PlatformConnection
+            platform={currentPlatform}
+            onComplete={handlePlatformComplete}
+            onSkip={handlePlatformSkip}
+          />
+        )}
+
+        {/* AI Chat Assistant */}
+        <AIChat
+          platform={currentStep === 'website-analysis' ? websiteAnalysis?.cms?.name : currentPlatform?.displayName}
+          context={{
+            step: currentStep,
+            websiteAnalysis,
+            currentPlatform: currentPlatform?.displayName
+          }}
+          isOpen={showAIChat}
+          onToggle={() => setShowAIChat(!showAIChat)}
         />
       </div>
     </div>
