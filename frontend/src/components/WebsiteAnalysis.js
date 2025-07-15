@@ -74,8 +74,10 @@ function WebsiteAnalysis({ onComplete, onNext }) {
       ...analysis,
       wordpressSetup: wordpressData
     };
-    onComplete(completedAnalysis);
-    // Don't call onNext() - let OnboardingWizard handle completion detection
+    setAnalysis(completedAnalysis);
+    setShowWordPressSetup(false);
+    // Show Google setup automatically after WordPress completion
+    setShowGoogleMyBusinessSetup(true);
   };
 
   const handleGoogleMyBusinessSetupComplete = (data) => {
@@ -109,8 +111,8 @@ function WebsiteAnalysis({ onComplete, onNext }) {
         ads: data
       }
     };
+    // Complete the entire onboarding flow
     onComplete(completedAnalysis);
-    // Don't call onNext() - let OnboardingWizard handle completion detection
   };
 
   const getCMSInstructions = (cms) => {
