@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function GoogleAnalyticsSetup({ websiteUrl, onComplete }) {
+function GoogleAnalyticsSetup({ websiteUrl, onComplete, onBack, onCancel, stepInfo }) {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     websiteUrl: websiteUrl || '',
@@ -24,6 +24,20 @@ function GoogleAnalyticsSetup({ websiteUrl, onComplete }) {
 
   const handleComplete = () => {
     onComplete(formData);
+  };
+
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    } else if (onBack) {
+      onBack();
+    }
+  };
+
+  const handleCancel = () => {
+    if (onCancel) {
+      onCancel();
+    }
   };
 
   const canProceed = () => {
@@ -436,7 +450,68 @@ function GoogleAnalyticsSetup({ websiteUrl, onComplete }) {
             </div>
           )}
 
-          {/* Action Button */}
+          {/* Navigation Buttons */}
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: '1rem',
+            marginBottom: '1.5rem'
+          }}>
+            {/* Back Button */}
+            <button
+              onClick={handleBack}
+              style={{
+                background: 'transparent',
+                color: '#718096',
+                border: '2px solid #e2e8f0',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                fontWeight: '500',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              {step === 1 ? '← Back to Search Console' : '← Previous'}
+            </button>
+
+            {/* Step Indicator */}
+            {stepInfo && (
+              <div style={{
+                background: 'rgba(234, 67, 53, 0.1)',
+                color: '#EA4335',
+                padding: '0.5rem 1rem',
+                borderRadius: '20px',
+                fontSize: '0.875rem',
+                fontWeight: '500'
+              }}>
+                {stepInfo}
+              </div>
+            )}
+
+            {/* Cancel Button */}
+            <button
+              onClick={handleCancel}
+              style={{
+                background: 'rgba(234, 67, 53, 0.1)',
+                color: '#EA4335',
+                border: 'none',
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                cursor: 'pointer',
+                fontSize: '1.2rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Main Action Button */}
           <div style={{ textAlign: 'center' }}>
             <button
               onClick={step === 3 ? handleComplete : handleNext}
@@ -450,13 +525,14 @@ function GoogleAnalyticsSetup({ websiteUrl, onComplete }) {
                 padding: '1rem 3rem',
                 borderRadius: '12px',
                 fontSize: '1.1rem',
-                fontWeight: '500',
+                fontWeight: '600',
                 cursor: canProceed() ? 'pointer' : 'not-allowed',
                 transition: 'all 0.2s ease',
-                transform: canProceed() ? 'none' : 'scale(0.98)'
+                transform: canProceed() ? 'none' : 'scale(0.98)',
+                boxShadow: canProceed() ? '0 4px 15px rgba(234, 67, 53, 0.3)' : 'none'
               }}
             >
-              {step === 3 ? 'Complete Setup' : 'Continue'}
+              {step === 3 ? 'Continue to Google Ads →' : 'Continue →'}
             </button>
           </div>
         </div>
