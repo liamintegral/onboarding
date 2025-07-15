@@ -65,8 +65,8 @@ function WebsiteAnalysis({ onComplete, onNext }) {
   };
 
   const handleContinue = () => {
-    onComplete(analysis);
-    onNext();
+    // Instead of showing old wizard, show platform selection in Apple style
+    setShowGoogleMyBusinessSetup(true);
   };
 
   const handleWordPressSetupComplete = (wordpressData) => {
@@ -217,6 +217,7 @@ function WebsiteAnalysis({ onComplete, onNext }) {
         onComplete={handleGoogleMyBusinessSetupComplete}
         onBack={() => setShowGoogleMyBusinessSetup(false)}
         onCancel={() => setShowGoogleMyBusinessSetup(false)}
+        stepInfo="Google Setup: Step 1 of 5"
       />
     );
   }
@@ -234,6 +235,7 @@ function WebsiteAnalysis({ onComplete, onNext }) {
           setShowGoogleTagManagerSetup(false);
           setShowGoogleMyBusinessSetup(false);
         }}
+        stepInfo="Google Setup: Step 2 of 5"
       />
     );
   }
@@ -252,6 +254,7 @@ function WebsiteAnalysis({ onComplete, onNext }) {
           setShowGoogleMyBusinessSetup(false);
           setShowGoogleTagManagerSetup(false);
         }}
+        stepInfo="Google Setup: Step 3 of 5"
       />
     );
   }
@@ -271,6 +274,7 @@ function WebsiteAnalysis({ onComplete, onNext }) {
           setShowGoogleTagManagerSetup(false);
           setShowGoogleSearchConsoleSetup(false);
         }}
+        stepInfo="Google Setup: Step 4 of 5"
       />
     );
   }
@@ -291,6 +295,7 @@ function WebsiteAnalysis({ onComplete, onNext }) {
           setShowGoogleSearchConsoleSetup(false);
           setShowGoogleAnalyticsSetup(false);
         }}
+        stepInfo="Google Setup: Step 5 of 5"
       />
     );
   }
@@ -600,10 +605,107 @@ function WebsiteAnalysis({ onComplete, onNext }) {
             </div>
           </div>
 
+          {/* Platform Selection - Apple Style */}
+          <div style={{
+            background: 'white',
+            border: '2px solid #e2e8f0',
+            borderRadius: '12px',
+            padding: '2rem',
+            marginBottom: '2rem'
+          }}>
+            <h3 style={{ 
+              margin: '0 0 1rem 0', 
+              color: '#2d3748',
+              textAlign: 'center'
+            }}>
+              🚀 Choose Your Setup Path
+            </h3>
+            <p style={{
+              margin: '0 0 2rem 0',
+              color: '#718096',
+              textAlign: 'center',
+              fontSize: '0.95rem'
+            }}>
+              Select which platforms you'd like to connect first:
+            </p>
+            
+            <div style={{
+              display: 'grid',
+              gap: '1rem'
+            }}>
+              <button
+                onClick={() => setShowGoogleMyBusinessSetup(true)}
+                style={{
+                  padding: '1.5rem 2rem',
+                  background: 'linear-gradient(135deg, #4285f4 0%, #34a853 100%)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                  fontSize: '1.1rem',
+                  boxShadow: '0 4px 15px rgba(66, 133, 244, 0.3)',
+                  transition: 'transform 0.2s ease'
+                }}
+                onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+                onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+              >
+                🏢 Google Properties Setup
+                <div style={{ fontSize: '0.9rem', opacity: 0.9, marginTop: '0.5rem' }}>
+                  My Business → Tag Manager → Search Console → Analytics → Ads
+                </div>
+              </button>
+              
+              {analysis.cms?.name === 'WordPress' && (
+                <button
+                  onClick={() => setShowWordPressSetup(true)}
+                  style={{
+                    padding: '1.5rem 2rem',
+                    background: 'linear-gradient(135deg, #21759b 0%, #0073aa 100%)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '12px',
+                    cursor: 'pointer',
+                    fontWeight: '600',
+                    fontSize: '1.1rem',
+                    boxShadow: '0 4px 15px rgba(33, 117, 155, 0.3)',
+                    transition: 'transform 0.2s ease'
+                  }}
+                  onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+                  onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+                >
+                  🔧 WordPress Setup
+                  <div style={{ fontSize: '0.9rem', opacity: 0.9, marginTop: '0.5rem' }}>
+                    Admin access and plugin configuration
+                  </div>
+                </button>
+              )}
+              
+              <button
+                onClick={() => onComplete(analysis)}
+                style={{
+                  padding: '1rem 2rem',
+                  background: '#f7fafc',
+                  color: '#4a5568',
+                  border: '2px solid #e2e8f0',
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  fontWeight: '500',
+                  fontSize: '1rem'
+                }}
+              >
+                💬 Skip to Manual Configuration
+                <div style={{ fontSize: '0.85rem', opacity: 0.8, marginTop: '0.3rem' }}>
+                  Set up platforms individually later
+                </div>
+              </button>
+            </div>
+          </div>
+
           {/* Action Buttons */}
           <div style={{ 
             display: 'flex', 
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             gap: '1rem'
           }}>
             <button
@@ -617,26 +719,12 @@ function WebsiteAnalysis({ onComplete, onNext }) {
                 background: '#f7fafc',
                 color: '#4a5568',
                 border: '1px solid #e2e8f0',
-                borderRadius: '6px',
-                cursor: 'pointer'
-              }}
-            >
-              Analyze Different URL
-            </button>
-
-            <button
-              onClick={handleContinue}
-              style={{
-                padding: '0.75rem 2rem',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '6px',
+                borderRadius: '8px',
                 cursor: 'pointer',
-                fontWeight: '600'
+                fontWeight: '500'
               }}
             >
-              Continue Setup →
+              ← Analyze Different URL
             </button>
           </div>
         </div>
