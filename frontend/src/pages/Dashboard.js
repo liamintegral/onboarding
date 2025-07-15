@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import OnboardingWizard from '../components/OnboardingWizard';
 
 function Dashboard() {
   const { user, logout } = useAuth();
   const [platforms, setPlatforms] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [showWizard, setShowWizard] = useState(false);
 
   useEffect(() => {
     fetchPlatforms();
@@ -22,7 +24,7 @@ function Dashboard() {
 
       if (response.ok) {
         const data = await response.json();
-        setPlatforms(data.platforms || {});
+        setPlatforms(data.platformTypes || {});
       } else {
         setError('Failed to load platforms');
       }
@@ -36,6 +38,17 @@ function Dashboard() {
 
   const handleLogout = async () => {
     await logout();
+  };
+
+  const handleWizardComplete = (results) => {
+    console.log('Onboarding completed:', results);
+    setShowWizard(false);
+    // Refresh platforms to show updated status
+    fetchPlatforms();
+  };
+
+  const handleWizardClose = () => {
+    setShowWizard(false);
   };
 
   if (loading) {
@@ -92,9 +105,25 @@ function Dashboard() {
           boxShadow: '0 5px 20px rgba(0, 0, 0, 0.08)',
           marginBottom: '2rem'
         }}>
-          <h2 style={{ marginBottom: '1rem', color: '#2d3748' }}>Onboarding Progress</h2>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <h2 style={{ margin: 0, color: '#2d3748' }}>Onboarding Progress</h2>
+            <button
+              onClick={() => setShowWizard(true)}
+              style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                border: 'none',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: '600'
+              }}
+            >
+              Start Guided Setup
+            </button>
+          </div>
           <p style={{ color: '#718096', marginBottom: '2rem' }}>
-            Connect your marketing platforms to get started with our services.
+            Connect your marketing platforms to get started with our services. Use our guided wizard for step-by-step assistance.
           </p>
 
           {/* Platform Categories */}
@@ -186,13 +215,22 @@ function Dashboard() {
         }}>
           <h2 style={{ marginBottom: '1rem', color: '#2d3748' }}>Next Steps</h2>
           <ol style={{ paddingLeft: '2rem', color: '#718096' }}>
-            <li style={{ marginBottom: '0.5rem' }}>Review the platform connection requirements above</li>
-            <li style={{ marginBottom: '0.5rem' }}>Click on each platform to begin the setup process</li>
-            <li style={{ marginBottom: '0.5rem' }}>Our AI assistant will guide you through each step</li>
+            <li style={{ marginBottom: '0.5rem' }}>Click "Start Guided Setup" to begin the step-by-step process</li>
+            <li style={{ marginBottom: '0.5rem' }}>Provide access credentials for each platform when prompted</li>
+            <li style={{ marginBottom: '0.5rem' }}>Our system will validate each connection automatically</li>
             <li>Schedule a kickoff call once all platforms are connected</li>
           </ol>
         </div>
       </div>
+
+      {/* Onboarding Wizard Modal */}
+      {showWizard && (
+        <OnboardingWizard
+          platforms={platforms}
+          onComplete={handleWizardComplete}
+          onClose={handleWizardClose}
+        />
+      )}
     </div>
   );
 }
