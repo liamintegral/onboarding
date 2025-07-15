@@ -74,9 +74,22 @@ function OnboardingWizard({ platforms, onComplete, onClose }) {
 
   const handleWebsiteAnalysisComplete = (analysis) => {
     setWebsiteAnalysis(analysis);
+    // If the analysis completed through our new Apple-style flows (WordPress or Google),
+    // then complete the onboarding entirely - don't transition to old wizard
+    if (analysis.wordpressSetup || analysis.googleSetup) {
+      onComplete({
+        websiteAnalysis: analysis,
+        completed: [],
+        skipped: [],
+        total: 0,
+        newFlowCompleted: true
+      });
+    }
   };
 
   const handleWebsiteAnalysisNext = () => {
+    // Only transition to old platform setup if user specifically chose "Continue Setup"
+    // instead of completing through our new flows
     setCurrentStep('platforms');
   };
 

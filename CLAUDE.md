@@ -115,15 +115,24 @@ NODE_ENV=production
 - **Platform Types**: GET /api/platforms/types
 - **Test DB**: GET /api/test-db
 
-## Current Development Status: COMPLETED ✅
-**Project Status**: LIVE AND FULLY FUNCTIONAL
-**Last Updated**: July 14, 2025
-**Deployment**: Production-ready on Vercel
+## Current Development Status: ENHANCED UX FLOWS ✅
+**Project Status**: LIVE WITH APPLE-STYLE SETUP FLOWS
+**Last Updated**: July 15, 2025
+**Deployment**: Production-ready on Vercel with new Google flows
 **Database**: Fully configured with seeded data
-**Frontend**: React dashboard deployed and working
+**Frontend**: React dashboard with elegant setup experiences
 **Backend**: All API endpoints deployed and tested
 
-### Recent Achievements
+### Recent Achievements (July 15, 2025)
+- ✅ Created 5 Apple-style Google property setup components
+- ✅ Implemented seamless progressive flow (My Business → Tag Manager → Search Console → Analytics → Ads)
+- ✅ Added robust navigation system with back/cancel functionality
+- ✅ Enhanced WordPress setup with navigation controls
+- ✅ Added step indicators showing "Google Setup: Step X of 5"
+- ✅ Fixed routing to prevent old wizard from appearing after new flows
+- ✅ Added quick setup buttons for manual platform access
+
+### Previous Achievements (July 14, 2025)
 - ✅ Full-stack application deployed to production
 - ✅ React frontend with authentication working perfectly
 - ✅ All API endpoints functional
@@ -131,12 +140,34 @@ NODE_ENV=production
 - ✅ Responsive design confirmed working
 - ✅ Git repository properly configured
 
+## Current Known Issues (July 15, 2025)
+
+### 🐛 **CRITICAL BUG: Platform Setup Wizard Still Appears**
+- **Problem**: After completing WordPress setup, old platform wizard sometimes still shows
+- **Root Cause**: OnboardingWizard routing logic needs complete validation
+- **Fix Applied**: Updated handleWebsiteAnalysisComplete to detect new flow completion
+- **Status**: NEEDS TESTING - may require additional routing fixes
+- **Workaround**: Users can use "Google Properties" quick setup button
+
+### 🔍 **Detection Logic Inconsistency**  
+- **Problem**: Automatic Google flow detection may not trigger reliably
+- **Impact**: Users may not see new Apple-style flows automatically
+- **Workaround**: Added manual "🏢 Google Properties" button in website analysis
+- **Future Fix**: Enhance website analysis detection algorithms
+
+## Next Session Priorities
+1. **🚨 HIGH PRIORITY**: Test and fix OnboardingWizard routing completely
+2. **🚨 HIGH PRIORITY**: Verify end-to-end Google property flow works without old wizard interference
+3. **📊 MEDIUM**: Improve automatic technology detection in website analysis
+4. **🎨 LOW**: Apply Apple-style design to remaining platforms (Meta, LinkedIn, TikTok)
+
 ## Working with Multiple Claude Instances
 1. Always read this CLAUDE.md file first
-2. Note that the project is COMPLETED and DEPLOYED
+2. Note that the project has ELEGANT SETUP FLOWS but ONE ROUTING BUG
 3. Check the live site: https://onboarding-dashboard-nine.vercel.app/
-4. Any new features should be planned as enhancements to the existing system
-5. Update this file if making significant architectural changes
+4. Focus on TESTING the complete Google flow and fixing any wizard routing issues
+5. Any new features should build on the Apple-style design patterns established
+6. Update this file if making significant architectural changes
 
 ## Important Notes
 - ✅ This is a COMPLETED defensive security project for client onboarding
