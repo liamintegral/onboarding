@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import WordPressSetup from './WordPressSetup';
+import GoogleMyBusinessSetup from './GoogleMyBusinessSetup';
+import GoogleTagManagerSetup from './GoogleTagManagerSetup';
+import GoogleSearchConsoleSetup from './GoogleSearchConsoleSetup';
+import GoogleAnalyticsSetup from './GoogleAnalyticsSetup';
+import GoogleAdsSetup from './GoogleAdsSetup';
 
 function WebsiteAnalysis({ onComplete, onNext }) {
   const [websiteUrl, setWebsiteUrl] = useState('');
@@ -7,6 +12,11 @@ function WebsiteAnalysis({ onComplete, onNext }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showWordPressSetup, setShowWordPressSetup] = useState(false);
+  const [showGoogleMyBusinessSetup, setShowGoogleMyBusinessSetup] = useState(false);
+  const [showGoogleTagManagerSetup, setShowGoogleTagManagerSetup] = useState(false);
+  const [showGoogleSearchConsoleSetup, setShowGoogleSearchConsoleSetup] = useState(false);
+  const [showGoogleAnalyticsSetup, setShowGoogleAnalyticsSetup] = useState(false);
+  const [showGoogleAdsSetup, setShowGoogleAdsSetup] = useState(false);
 
   const handleAnalyze = async () => {
     if (!websiteUrl.trim()) {
@@ -32,9 +42,16 @@ function WebsiteAnalysis({ onComplete, onNext }) {
 
       if (response.ok) {
         setAnalysis(data.website);
-        // If WordPress is detected, automatically show the setup flow
+        // Automatically show platform-specific setup flows based on detection
         if (data.website.cms?.name === 'WordPress') {
           setShowWordPressSetup(true);
+        } else if (data.website.technologies?.some(tech => 
+          tech.name?.toLowerCase().includes('google') || 
+          tech.name?.toLowerCase().includes('analytics') ||
+          tech.name?.toLowerCase().includes('tag manager')
+        )) {
+          // Show Google services setup
+          setShowGoogleMyBusinessSetup(true);
         }
       } else {
         setError(data.error || 'Failed to analyze website');
@@ -56,6 +73,41 @@ function WebsiteAnalysis({ onComplete, onNext }) {
     const completedAnalysis = {
       ...analysis,
       wordpressSetup: wordpressData
+    };
+    onComplete(completedAnalysis);
+    onNext();
+  };
+
+  const handleGoogleMyBusinessSetupComplete = (data) => {
+    setShowGoogleMyBusinessSetup(false);
+    setShowGoogleTagManagerSetup(true);
+  };
+
+  const handleGoogleTagManagerSetupComplete = (data) => {
+    setShowGoogleTagManagerSetup(false);
+    setShowGoogleSearchConsoleSetup(true);
+  };
+
+  const handleGoogleSearchConsoleSetupComplete = (data) => {
+    setShowGoogleSearchConsoleSetup(false);
+    setShowGoogleAnalyticsSetup(true);
+  };
+
+  const handleGoogleAnalyticsSetupComplete = (data) => {
+    setShowGoogleAnalyticsSetup(false);
+    setShowGoogleAdsSetup(true);
+  };
+
+  const handleGoogleAdsSetupComplete = (data) => {
+    const completedAnalysis = {
+      ...analysis,
+      googleSetup: {
+        myBusiness: data.myBusiness || {},
+        tagManager: data.tagManager || {},
+        searchConsole: data.searchConsole || {},
+        analytics: data.analytics || {},
+        ads: data
+      }
     };
     onComplete(completedAnalysis);
     onNext();
@@ -146,12 +198,57 @@ function WebsiteAnalysis({ onComplete, onNext }) {
   };
 
 
-  // If WordPress setup is active, show the dedicated setup flow
+  // Show appropriate setup flow based on platform detection
   if (showWordPressSetup) {
     return (
       <WordPressSetup
         websiteUrl={websiteUrl}
         onComplete={handleWordPressSetupComplete}
+      />
+    );
+  }
+
+  if (showGoogleMyBusinessSetup) {
+    return (
+      <GoogleMyBusinessSetup
+        businessInfo={{ businessName: '', businessAddress: '' }}
+        onComplete={handleGoogleMyBusinessSetupComplete}
+      />
+    );
+  }
+
+  if (showGoogleTagManagerSetup) {
+    return (
+      <GoogleTagManagerSetup
+        websiteUrl={websiteUrl}
+        onComplete={handleGoogleTagManagerSetupComplete}
+      />
+    );
+  }
+
+  if (showGoogleSearchConsoleSetup) {
+    return (
+      <GoogleSearchConsoleSetup
+        websiteUrl={websiteUrl}
+        onComplete={handleGoogleSearchConsoleSetupComplete}
+      />
+    );
+  }
+
+  if (showGoogleAnalyticsSetup) {
+    return (
+      <GoogleAnalyticsSetup
+        websiteUrl={websiteUrl}
+        onComplete={handleGoogleAnalyticsSetupComplete}
+      />
+    );
+  }
+
+  if (showGoogleAdsSetup) {
+    return (
+      <GoogleAdsSetup
+        businessInfo={{ businessName: '', businessAddress: '' }}
+        onComplete={handleGoogleAdsSetupComplete}
       />
     );
   }
