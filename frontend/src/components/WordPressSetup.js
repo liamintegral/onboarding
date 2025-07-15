@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function WordPressSetup({ websiteUrl, onComplete }) {
+function WordPressSetup({ websiteUrl, onComplete, onBack, onCancel }) {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     websiteUrl: websiteUrl || '',
@@ -19,6 +19,20 @@ function WordPressSetup({ websiteUrl, onComplete }) {
   const handleNext = () => {
     if (step < 3) {
       setStep(step + 1);
+    }
+  };
+
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    } else if (onBack) {
+      onBack();
+    }
+  };
+
+  const handleCancel = () => {
+    if (onCancel) {
+      onCancel();
     }
   };
 
@@ -62,8 +76,38 @@ function WordPressSetup({ websiteUrl, onComplete }) {
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           color: 'white',
           padding: '3rem 3rem 2rem 3rem',
-          textAlign: 'center'
+          textAlign: 'center',
+          position: 'relative'
         }}>
+          {/* Cancel Button */}
+          {onCancel && (
+            <button
+              onClick={handleCancel}
+              style={{
+                position: 'absolute',
+                top: '1.5rem',
+                right: '1.5rem',
+                background: 'rgba(255, 255, 255, 0.2)',
+                border: 'none',
+                color: 'white',
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                cursor: 'pointer',
+                fontSize: '1.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'background 0.2s ease'
+              }}
+              onMouseEnter={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
+              onMouseLeave={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+              title="Exit setup"
+            >
+              ×
+            </button>
+          )}
+          
           <div style={{
             fontSize: '3rem',
             marginBottom: '1rem'
@@ -392,8 +436,43 @@ function WordPressSetup({ websiteUrl, onComplete }) {
             </div>
           )}
 
-          {/* Action Button */}
-          <div style={{ textAlign: 'center' }}>
+          {/* Navigation Buttons */}
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            gap: '1rem'
+          }}>
+            {/* Back Button */}
+            <button
+              onClick={handleBack}
+              style={{
+                background: 'transparent',
+                color: '#718096',
+                border: '2px solid #e2e8f0',
+                padding: '1rem 2rem',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                fontWeight: '500',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.borderColor = '#cbd5e0';
+                e.target.style.color = '#4a5568';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.borderColor = '#e2e8f0';
+                e.target.style.color = '#718096';
+              }}
+            >
+              ← {step === 1 ? 'Back' : 'Previous'}
+            </button>
+
+            {/* Continue/Complete Button */}
             <button
               onClick={step === 3 ? handleComplete : handleNext}
               disabled={!canProceed()}
@@ -409,10 +488,13 @@ function WordPressSetup({ websiteUrl, onComplete }) {
                 fontWeight: '500',
                 cursor: canProceed() ? 'pointer' : 'not-allowed',
                 transition: 'all 0.2s ease',
-                transform: canProceed() ? 'none' : 'scale(0.98)'
+                transform: canProceed() ? 'none' : 'scale(0.98)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
               }}
             >
-              {step === 3 ? 'Complete Setup' : 'Continue'}
+              {step === 3 ? 'Complete Setup' : 'Continue →'}
             </button>
           </div>
         </div>

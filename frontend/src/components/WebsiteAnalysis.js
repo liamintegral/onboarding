@@ -204,6 +204,8 @@ function WebsiteAnalysis({ onComplete, onNext }) {
       <WordPressSetup
         websiteUrl={websiteUrl}
         onComplete={handleWordPressSetupComplete}
+        onBack={() => setShowWordPressSetup(false)}
+        onCancel={() => setShowWordPressSetup(false)}
       />
     );
   }
@@ -213,6 +215,8 @@ function WebsiteAnalysis({ onComplete, onNext }) {
       <GoogleMyBusinessSetup
         businessInfo={{ businessName: '', businessAddress: '' }}
         onComplete={handleGoogleMyBusinessSetupComplete}
+        onBack={() => setShowGoogleMyBusinessSetup(false)}
+        onCancel={() => setShowGoogleMyBusinessSetup(false)}
       />
     );
   }
@@ -222,6 +226,14 @@ function WebsiteAnalysis({ onComplete, onNext }) {
       <GoogleTagManagerSetup
         websiteUrl={websiteUrl}
         onComplete={handleGoogleTagManagerSetupComplete}
+        onBack={() => {
+          setShowGoogleTagManagerSetup(false);
+          setShowGoogleMyBusinessSetup(true);
+        }}
+        onCancel={() => {
+          setShowGoogleTagManagerSetup(false);
+          setShowGoogleMyBusinessSetup(false);
+        }}
       />
     );
   }
@@ -231,6 +243,15 @@ function WebsiteAnalysis({ onComplete, onNext }) {
       <GoogleSearchConsoleSetup
         websiteUrl={websiteUrl}
         onComplete={handleGoogleSearchConsoleSetupComplete}
+        onBack={() => {
+          setShowGoogleSearchConsoleSetup(false);
+          setShowGoogleTagManagerSetup(true);
+        }}
+        onCancel={() => {
+          setShowGoogleSearchConsoleSetup(false);
+          setShowGoogleMyBusinessSetup(false);
+          setShowGoogleTagManagerSetup(false);
+        }}
       />
     );
   }
@@ -240,6 +261,16 @@ function WebsiteAnalysis({ onComplete, onNext }) {
       <GoogleAnalyticsSetup
         websiteUrl={websiteUrl}
         onComplete={handleGoogleAnalyticsSetupComplete}
+        onBack={() => {
+          setShowGoogleAnalyticsSetup(false);
+          setShowGoogleSearchConsoleSetup(true);
+        }}
+        onCancel={() => {
+          setShowGoogleAnalyticsSetup(false);
+          setShowGoogleMyBusinessSetup(false);
+          setShowGoogleTagManagerSetup(false);
+          setShowGoogleSearchConsoleSetup(false);
+        }}
       />
     );
   }
@@ -249,6 +280,17 @@ function WebsiteAnalysis({ onComplete, onNext }) {
       <GoogleAdsSetup
         businessInfo={{ businessName: '', businessAddress: '' }}
         onComplete={handleGoogleAdsSetupComplete}
+        onBack={() => {
+          setShowGoogleAdsSetup(false);
+          setShowGoogleAnalyticsSetup(true);
+        }}
+        onCancel={() => {
+          setShowGoogleAdsSetup(false);
+          setShowGoogleMyBusinessSetup(false);
+          setShowGoogleTagManagerSetup(false);
+          setShowGoogleSearchConsoleSetup(false);
+          setShowGoogleAnalyticsSetup(false);
+        }}
       />
     );
   }

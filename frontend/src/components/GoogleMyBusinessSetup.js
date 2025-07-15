@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function GoogleMyBusinessSetup({ businessInfo, onComplete }) {
+function GoogleMyBusinessSetup({ businessInfo, onComplete, onBack, onCancel }) {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     businessName: businessInfo?.businessName || '',
@@ -24,6 +24,20 @@ function GoogleMyBusinessSetup({ businessInfo, onComplete }) {
 
   const handleComplete = () => {
     onComplete(formData);
+  };
+
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    } else if (onBack) {
+      onBack();
+    }
+  };
+
+  const handleCancel = () => {
+    if (onCancel) {
+      onCancel();
+    }
   };
 
   const canProceed = () => {
@@ -62,8 +76,52 @@ function GoogleMyBusinessSetup({ businessInfo, onComplete }) {
           background: 'linear-gradient(135deg, #4285f4 0%, #34a853 100%)',
           color: 'white',
           padding: '3rem 3rem 2rem 3rem',
-          textAlign: 'center'
+          textAlign: 'center',
+          position: 'relative'
         }}>
+          {/* Cancel Button */}
+          {onCancel && (
+            <button
+              onClick={handleCancel}
+              style={{
+                position: 'absolute',
+                top: '1.5rem',
+                right: '1.5rem',
+                background: 'rgba(255, 255, 255, 0.2)',
+                border: 'none',
+                color: 'white',
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                cursor: 'pointer',
+                fontSize: '1.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'background 0.2s ease'
+              }}
+              onMouseEnter={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
+              onMouseLeave={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+              title="Exit setup"
+            >
+              ×
+            </button>
+          )}
+          
+          {/* Step Indicator */}
+          <div style={{
+            position: 'absolute',
+            top: '1.5rem',
+            left: '1.5rem',
+            background: 'rgba(255, 255, 255, 0.2)',
+            padding: '0.5rem 1rem',
+            borderRadius: '20px',
+            fontSize: '0.875rem',
+            fontWeight: '500'
+          }}>
+            Google Setup: Step 1 of 5
+          </div>
+          
           <div style={{
             fontSize: '3rem',
             marginBottom: '1rem'
@@ -394,8 +452,43 @@ function GoogleMyBusinessSetup({ businessInfo, onComplete }) {
             </div>
           )}
 
-          {/* Action Button */}
-          <div style={{ textAlign: 'center' }}>
+          {/* Navigation Buttons */}
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            gap: '1rem'
+          }}>
+            {/* Back Button */}
+            <button
+              onClick={handleBack}
+              style={{
+                background: 'transparent',
+                color: '#718096',
+                border: '2px solid #e2e8f0',
+                padding: '1rem 2rem',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                fontWeight: '500',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.borderColor = '#cbd5e0';
+                e.target.style.color = '#4a5568';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.borderColor = '#e2e8f0';
+                e.target.style.color = '#718096';
+              }}
+            >
+              ← {step === 1 ? 'Back' : 'Previous'}
+            </button>
+
+            {/* Continue/Complete Button */}
             <button
               onClick={step === 3 ? handleComplete : handleNext}
               disabled={!canProceed()}
@@ -411,10 +504,13 @@ function GoogleMyBusinessSetup({ businessInfo, onComplete }) {
                 fontWeight: '500',
                 cursor: canProceed() ? 'pointer' : 'not-allowed',
                 transition: 'all 0.2s ease',
-                transform: canProceed() ? 'none' : 'scale(0.98)'
+                transform: canProceed() ? 'none' : 'scale(0.98)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
               }}
             >
-              {step === 3 ? 'Complete Setup' : 'Continue'}
+              {step === 3 ? 'Next: Tag Manager →' : 'Continue →'}
             </button>
           </div>
         </div>
