@@ -75,7 +75,7 @@ function WebsiteAnalysis({ onComplete, onNext }) {
       wordpressSetup: wordpressData
     };
     onComplete(completedAnalysis);
-    onNext();
+    // Don't call onNext() - let OnboardingWizard handle completion detection
   };
 
   const handleGoogleMyBusinessSetupComplete = (data) => {
@@ -110,7 +110,7 @@ function WebsiteAnalysis({ onComplete, onNext }) {
       }
     };
     onComplete(completedAnalysis);
-    onNext();
+    // Don't call onNext() - let OnboardingWizard handle completion detection
   };
 
   const getCMSInstructions = (cms) => {
